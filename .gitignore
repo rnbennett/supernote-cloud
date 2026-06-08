@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Muster orchestration metadata
+.muster/

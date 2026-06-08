@@ -1,6 +1,6 @@
 [project]
 name = "supernote-cloud"
-version = "0.3.0"
+version = "0.4.0"
 description = "Unofficial Python API client that allows you to access your Supernote files through the Supernote Cloud"
 readme = "README.md"
 authors = [
@@ -29,3 +29,21 @@ CI = "https://github.com/rnbennett/supernote-cloud/actions"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+# E/F = pyflakes+pycodestyle, I = import sorting
+select = ["E", "F", "I"]
+# Long lines are not worth churning the existing code over.
+ignore = ["E501"]

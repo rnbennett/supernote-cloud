@@ -1,15 +1,19 @@
-from pathlib import Path
-import httpx
-from typing import Optional, Dict, Any, Tuple, List, Union
 import os
+from hashlib import md5, sha256
+from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
 
-from hashlib import sha256, md5
+import httpx
 
-from supernote_cloud.models import File, Directory
 from supernote_cloud import endpoints
 from supernote_cloud.exceptions import ApiError, AuthenticationError, FileFolderNotFound
+from supernote_cloud.models import Directory, File
 
-__version__ = "0.1.0"
+try:
+    __version__ = version("supernote-cloud")
+except PackageNotFoundError:  # running from a source checkout that isn't installed
+    __version__ = "0.0.0"
 
 def calc_sha256(text: str) -> str:
     """
