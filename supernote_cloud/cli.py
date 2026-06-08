@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from sncloud.api import SNClient
-from sncloud.exceptions import AuthenticationError, ApiError
+from supernote_cloud.api import SNClient
+from supernote_cloud.exceptions import AuthenticationError, ApiError
 
-CONFIG_DIR = Path.home() / ".config" / "sncloud"
+CONFIG_DIR = Path.home() / ".config" / "supernote-cloud"
 CONFIG_PATH = CONFIG_DIR / "config.json"
 
 

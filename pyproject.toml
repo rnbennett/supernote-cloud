@@ -1,12 +1,15 @@
 [project]
-name = "sncloud"
-version = "0.2.1"
+name = "supernote-cloud"
+version = "0.3.0"
 description = "Unofficial Python API client that allows you to access your Supernote files through the Supernote Cloud"
 readme = "README.md"
 authors = [
-    { name = "Julian Prester", email = "hi@julianprester.com" }
+    { name = "Julian Prester", email = "hi@julianprester.com" },
 ]
-license = {text = "Apache-2.0"}
+maintainers = [
+    { name = "Ryan Bennett", email = "rnbennett@gmail.com" },
+]
+license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 dependencies = [
     "click>=8.1.8",
@@ -15,13 +18,13 @@ dependencies = [
 ]
 
 [project.scripts]
-sncloud = "sncloud.cli:cli"
+supernote-cloud = "supernote_cloud.cli:cli"
 
 [project.urls]
-Homepage = "https://github.com/julianprester/sncloud"
-Changelog = "https://github.com/julianprester/sncloud/releases"
-Issues = "https://github.com/julianprester/sncloud/issues"
-CI = "https://github.com/julianprester/sncloud/actions"
+Homepage = "https://github.com/rnbennett/supernote-cloud"
+Changelog = "https://github.com/rnbennett/supernote-cloud/releases"
+Issues = "https://github.com/rnbennett/supernote-cloud/issues"
+CI = "https://github.com/rnbennett/supernote-cloud/actions"
 
 [build-system]
 requires = ["hatchling"]

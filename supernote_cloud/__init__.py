@@ -1,6 +1,6 @@
-from sncloud import api
-from sncloud.api import SNClient
-from sncloud.models import Directory, File
+from supernote_cloud import api
+from supernote_cloud.api import SNClient
+from supernote_cloud.models import Directory, File
 
 __author__ = 'Julian Prester <hi@julianprester.com>'
 __version__ = api.__version__

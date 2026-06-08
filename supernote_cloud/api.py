@@ -5,9 +5,9 @@ import os
 
 from hashlib import sha256, md5
 
-from sncloud.models import File, Directory
-from sncloud import endpoints
-from sncloud.exceptions import ApiError, AuthenticationError, FileFolderNotFound
+from supernote_cloud.models import File, Directory
+from supernote_cloud import endpoints
+from supernote_cloud.exceptions import ApiError, AuthenticationError, FileFolderNotFound
 
 __version__ = "0.1.0"
 
