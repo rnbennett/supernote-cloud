@@ -1,6 +1,8 @@
-from typing import Annotated, Literal
-from pydantic import BaseModel, Field, BeforeValidator
 from datetime import datetime, timezone
+from typing import Annotated, Literal
+
+from pydantic import BaseModel, BeforeValidator, Field
+
 
 def convert_timestamp(epoch: int) -> datetime:
     """Convert millisecond timestamp to datetime"""

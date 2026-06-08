@@ -1,0 +1,57 @@
+{
+  "outcome": "Ship supernote-cloud 0.4.0 release bundle (merge-ready, no publish/tag)",
+  "successCriteria": [
+    "examples/ has runnable scripts (basic usage, folder sync via walk, batch export-to-PDF, move/copy/rename) using env-var creds; linked from README",
+    "supernote_cloud/py.typed present and included in built wheel",
+    "pytest suite green, no live network; covers hashing, _get_directory_id/_extract_real_key, login success/E1760/failure, ls parsing, rename/move/copy/delete/mkdir, walk",
+    ".github/workflows/test.yml runs pytest + ruff on push/PR (valid YAML)",
+    "api.py __version__ derives from importlib.metadata (no hardcoded 0.1.0)",
+    "README Roadmap section removed (done last)"
+  ],
+  "crew": [
+    {
+      "role": "implementer",
+      "stage": "build",
+      "source": "inline",
+      "provider": "inline",
+      "rationale": "Additive, deterministic edits across a known small set of files; no design ambiguity warranting external agents or tournaments.",
+      "evidence": "api.py/models.py/cli.py already read; deliverables fully specified by the approved outcome.",
+      "fallback": "muster built-in muster-builder if inline edits stall"
+    },
+    {
+      "role": "review-gate",
+      "stage": "verify",
+      "source": "inline",
+      "provider": "inline",
+      "rationale": "Verify the build/test/lint gate before presenting the merge decision.",
+      "evidence": "Gate is mechanical: uv build + uv run pytest + ruff check + isolated import.",
+      "fallback": "muster-reviewer built-in if a finding needs an independent pass"
+    }
+  ],
+  "recommendations": [],
+  "degradations": [],
+  "plan": [
+    {
+      "id": "w1-code",
+      "task": "Package code: add supernote_cloud/py.typed; wire api.py __version__ to importlib.metadata; add dev deps (pytest, respx-free monkeypatch, ruff) and [tool.ruff]/[tool.pytest] config to pyproject",
+      "mode": "single"
+    },
+    {
+      "id": "w2-tests",
+      "task": "Write httpx-mocked pytest suite: hashing, _get_directory_id/_extract_real_key, login success/E1760/failure, ls parsing, rename/move/copy/delete/mkdir payloads+errors, walk traversal",
+      "mode": "single"
+    },
+    {
+      "id": "w3-ci-examples",
+      "task": "Add .github/workflows/test.yml (pytest+ruff on push/PR); add examples/ scripts (basic, sync, export-pdf, organize) + Examples section/link in README",
+      "mode": "single"
+    },
+    {
+      "id": "w4-readme",
+      "task": "Remove the Roadmap section from README.md (after all other waves green)",
+      "mode": "single"
+    }
+  ],
+  "gate": "uv build clean AND uv run pytest green AND ruff check clean AND isolated import OK",
+  "disposition": "present merge decision (no publish, no tag)"
+}

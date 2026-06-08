@@ -1,11 +1,11 @@
-import click
 import json
-import os
 from pathlib import Path
 from typing import Optional
 
+import click
+
 from supernote_cloud.api import SNClient
-from supernote_cloud.exceptions import AuthenticationError, ApiError
+from supernote_cloud.exceptions import ApiError, AuthenticationError
 
 CONFIG_DIR = Path.home() / ".config" / "supernote-cloud"
 CONFIG_PATH = CONFIG_DIR / "config.json"
