@@ -102,14 +102,6 @@ The CLI will store your access token in `~/.config/supernote-cloud/config.json` 
 
 Runnable scripts for common workflows live in [`examples/`](examples/) — backing up a folder tree, batch-exporting notes to PDF, and reorganizing files. See the [examples README](examples/README.md).
 
-## Roadmap
-
-- [x] CLI / shell commands
-- [ ] Example scripts — common workflows (sync a folder, batch-export notes to PDF)
-- [ ] Advanced file operations — move, rename, copy, and recursive walk
-- [ ] Broader endpoint coverage as use cases come up
-- [ ] Docker image — likely only if a sync/daemon mode lands
-
 ## Contributing
 
 PRs are welcome. For anything beyond a small fix, open an issue first so we can make sure it fits the direction of the library before you put in the work.
