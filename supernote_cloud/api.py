@@ -550,6 +550,142 @@ class SNClient:
         }
         self._api_call(endpoints.upload_finish, payload)
 
+    def rename(self, item: Union[str, File, Directory], new_name: str) -> str:
+        """Rename a file or folder.
+
+        Args:
+            item: File or folder path or object to rename
+            new_name: New name (without path; extension is preserved if omitted for files)
+
+        Returns:
+            str: New name of the item
+
+        Raises:
+            AuthenticationError: If not authenticated
+            FileFolderNotFound: If item not found
+            ApiError: If rename fails
+        """
+        if not self._access_token:
+            raise AuthenticationError("Must be authenticated to rename files")
+
+        item_obj = self._get_item(item)
+        data = self._api_call(endpoints.rename, {"id": item_obj.id, "newName": new_name})
+        if not data["success"]:
+            raise ApiError(data["errorMsg"])
+        return new_name
+
+    def move(
+        self,
+        item: Union[str, File, Directory, list],
+        destination: Union[None, str, Directory] = None,
+    ) -> str:
+        """Move one or more files/folders to a destination directory.
+
+        Args:
+            item: File/folder path, object, or list thereof
+            destination: Destination directory path, object, or None for root
+
+        Returns:
+            str: Name(s) of moved item(s)
+
+        Raises:
+            AuthenticationError: If not authenticated
+            FileFolderNotFound: If item or destination not found
+            ApiError: If move fails
+        """
+        if not self._access_token:
+            raise AuthenticationError("Must be authenticated to move files")
+
+        if isinstance(item, list):
+            items = [self._get_item(i) for i in item]
+        else:
+            items = [self._get_item(item)]
+
+        source_dir_id = items[0].directory_id
+        dest_dir_id = self._get_directory_id(destination)
+        payload = {
+            "directoryId": source_dir_id,
+            "goDirectoryId": dest_dir_id,
+            "idList": [i.id for i in items],
+        }
+        data = self._api_call(endpoints.move, payload)
+        if not data["success"]:
+            raise ApiError(data["errorMsg"])
+        return ", ".join(i.file_name for i in items)
+
+    def copy(
+        self,
+        item: Union[str, File, Directory, list],
+        destination: Union[None, str, Directory] = None,
+    ) -> str:
+        """Copy one or more files/folders to a destination directory.
+
+        Args:
+            item: File/folder path, object, or list thereof
+            destination: Destination directory path, object, or None for root
+
+        Returns:
+            str: Name(s) of copied item(s)
+
+        Raises:
+            AuthenticationError: If not authenticated
+            FileFolderNotFound: If item or destination not found
+            ApiError: If copy fails
+        """
+        if not self._access_token:
+            raise AuthenticationError("Must be authenticated to copy files")
+
+        if isinstance(item, list):
+            items = [self._get_item(i) for i in item]
+        else:
+            items = [self._get_item(item)]
+
+        source_dir_id = items[0].directory_id
+        dest_dir_id = self._get_directory_id(destination)
+        payload = {
+            "directoryId": source_dir_id,
+            "goDirectoryId": dest_dir_id,
+            "idList": [i.id for i in items],
+        }
+        data = self._api_call(endpoints.copy, payload)
+        if not data["success"]:
+            raise ApiError(data["errorMsg"])
+        return ", ".join(i.file_name for i in items)
+
+    def walk(
+        self, directory: Union[None, str, Directory] = None
+    ) -> List[tuple]:
+        """Recursively walk the directory tree, similar to os.walk().
+
+        Yields (dirpath, dirs, files) tuples for each directory visited,
+        where dirpath is the path string, dirs is a list of Directory objects,
+        and files is a list of File objects.
+
+        Args:
+            directory: Starting directory path, object, or None for root
+
+        Yields:
+            Tuple of (dirpath: str, dirs: List[Directory], files: List[File])
+
+        Raises:
+            AuthenticationError: If not authenticated
+        """
+        if not self._access_token:
+            raise AuthenticationError("Must be authenticated to walk files")
+
+        def _walk(dir_obj, path: str):
+            items = self.ls(dir_obj)
+            dirs = [i for i in items if isinstance(i, Directory)]
+            files = [i for i in items if isinstance(i, File)]
+            yield (path, dirs, files)
+            for d in dirs:
+                child_path = path.rstrip("/") + "/" + d.file_name
+                yield from _walk(d, child_path)
+
+        start = self._get_item(directory) if directory else None
+        start_path = ("/" + start.file_name) if start else "/"
+        yield from _walk(start, start_path)
+
     def delete(self, item: Union[str, File, Directory, list[Union[str, File, Directory]]]) -> list[str]:
         """Delete a file or list of files.
 

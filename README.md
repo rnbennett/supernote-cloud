@@ -4,9 +4,9 @@ Unofficial Python API client that allows you to access your Supernote files thro
 
 > This is a maintained continuation of [julianprester/sncloud](https://github.com/julianprester/sncloud), carrying fixes for the Supernote Cloud API. It is published to PyPI as `supernote-cloud` and imported as `supernote_cloud`. Licensed under Apache-2.0; original work © Julian Prester.
 
-I maintain `supernote-cloud` to make your Supernote Cloud files programmatically accessible — so you can pull your notes into your own apps, scripts, and workflows. The tablet syncs to a few cloud providers that are easier to build against, but Supernote Cloud is the only one with automatic sync, which makes it the one worth integrating.
+`supernote-cloud` makes Supernote Cloud files programmatically accessible, so notes captured on a Supernote device can flow into the applications, automations, and workflows that rely on them. Supernote syncs to several cloud providers, but only Supernote Cloud offers automatic sync — making it the integration point that keeps that data current without manual exports.
 
-This library deliberately covers the operations people actually reach for — list, download, upload, and manage files — rather than every endpoint the service exposes. If there's something it doesn't do yet, open an issue or send a PR.
+The library focuses on the operations teams reach for most — listing, downloading, uploading, and managing files — rather than exhaustively wrapping the service. Need an endpoint it doesn't cover yet? Open an issue or a pull request.
 
 ## Core Features
 
@@ -18,6 +18,10 @@ This library deliberately covers the operations people actually reach for — li
 - 🔼 **Put** a file and upload it to the cloud
 - 📂 **Make a directory** on the cloud
 - 🗑 **Delete** a file or folder
+- ✏️ **Rename** a file or folder
+- 📦 **Move** files/folders to a new directory
+- 📋 **Copy** files/folders to a new directory
+- 🔍 **Walk** the directory tree recursively
 
 ## Installation
 
@@ -74,6 +78,22 @@ supernote-cloud put /path/to/file.txt --parent /Notes
 
 # Delete a file
 supernote-cloud rm /Notes/document.note
+
+# Rename a file or folder
+supernote-cloud rename /Notes/old-name.note new-name.note
+
+# Move a file to another directory
+supernote-cloud mv /Notes/document.note --destination /Archive
+
+# Move multiple files
+supernote-cloud mv /Notes/a.note /Notes/b.note --destination /Archive
+
+# Copy a file to another directory
+supernote-cloud cp /Notes/document.note --destination /Backup
+
+# Recursively list all files and folders
+supernote-cloud walk
+supernote-cloud walk /Notes
 ```
 
 The CLI will store your access token in `~/.config/supernote-cloud/config.json` and automatically refresh it when needed.

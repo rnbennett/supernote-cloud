@@ -216,6 +216,75 @@ def put(file_path: str, parent: Optional[str] = None):
 
 
 @cli.command()
+@click.argument("file_path")
+@click.argument("new_name")
+def rename(file_path: str, new_name: str):
+    """Rename a file or folder on Supernote Cloud."""
+    client = get_client()
+    client = ensure_authenticated(client)
+
+    try:
+        result = client.rename(file_path, new_name)
+        click.echo(f"Renamed to: {result}")
+    except Exception as e:
+        click.echo(f"Error: {str(e)}")
+        exit(1)
+
+
+@cli.command()
+@click.argument("file_path", nargs=-1, required=True)
+@click.option("--destination", "-d", required=True, help="Destination directory")
+def mv(file_path, destination: str):
+    """Move one or more files/folders to a destination directory."""
+    client = get_client()
+    client = ensure_authenticated(client)
+
+    try:
+        items = list(file_path)
+        result = client.move(items if len(items) > 1 else items[0], destination)
+        click.echo(f"Moved: {result}")
+    except Exception as e:
+        click.echo(f"Error: {str(e)}")
+        exit(1)
+
+
+@cli.command()
+@click.argument("file_path", nargs=-1, required=True)
+@click.option("--destination", "-d", required=True, help="Destination directory")
+def cp(file_path, destination: str):
+    """Copy one or more files/folders to a destination directory."""
+    client = get_client()
+    client = ensure_authenticated(client)
+
+    try:
+        items = list(file_path)
+        result = client.copy(items if len(items) > 1 else items[0], destination)
+        click.echo(f"Copied: {result}")
+    except Exception as e:
+        click.echo(f"Error: {str(e)}")
+        exit(1)
+
+
+@cli.command()
+@click.argument("directory", required=False)
+def walk(directory: Optional[str] = None):
+    """Recursively list all files and folders."""
+    client = get_client()
+    client = ensure_authenticated(client)
+
+    try:
+        for dirpath, dirs, files in client.walk(directory):
+            click.echo(f"\n{dirpath}")
+            for d in dirs:
+                click.echo(f"  📁 {d.file_name}")
+            for f in files:
+                click.echo(f"  📄 {f.file_name}")
+    except Exception as e:
+        click.echo(f"Error: {str(e)}")
+        exit(1)
+
+
+@cli.command()
 @click.argument("file_path", type=click.Path(), nargs=-1)
 def rm(file_path):
     """Delete a file from Supernote Cloud."""
