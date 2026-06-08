@@ -98,6 +98,10 @@ supernote-cloud walk /Notes
 
 The CLI will store your access token in `~/.config/supernote-cloud/config.json` and automatically refresh it when needed.
 
+## Examples
+
+Runnable scripts for common workflows live in [`examples/`](examples/) — backing up a folder tree, batch-exporting notes to PDF, and reorganizing files. See the [examples README](examples/README.md).
+
 ## Roadmap
 
 - [x] CLI / shell commands
