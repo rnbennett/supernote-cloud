@@ -4,9 +4,9 @@ Unofficial Python API client that allows you to access your Supernote files thro
 
 > This is a maintained continuation of [julianprester/sncloud](https://github.com/julianprester/sncloud), carrying fixes for the Supernote Cloud API. It is published to PyPI as `supernote-cloud` and imported as `supernote_cloud`. Licensed under Apache-2.0; original work © Julian Prester.
 
-`supernote-cloud` is intended for integrating your Supernote Cloud files into other apps. Yes, there are other cloud providers integrated into the Supernote which are easier to develop for, but only the Supernote Cloud offer "auto sync" at the moment. The Supernote APIs are extensive but this library only covers the subset that most developers will need for common filesystem actions such as list, download and upload files.
+I maintain `supernote-cloud` to make your Supernote Cloud files programmatically accessible — so you can pull your notes into your own apps, scripts, and workflows. The tablet syncs to a few cloud providers that are easier to build against, but Supernote Cloud is the only one with automatic sync, which makes it the one worth integrating.
 
-So while it doesn't currently cover every endpoint (for example you cannot move or rename files) it will likely work for you. That said, PRs are welcome.
+This library deliberately covers the operations people actually reach for — list, download, upload, and manage files — rather than every endpoint the service exposes. If there's something it doesn't do yet, open an issue or send a PR.
 
 ## Core Features
 
@@ -80,15 +80,15 @@ The CLI will store your access token in `~/.config/supernote-cloud/config.json` 
 
 ## Roadmap
 
-- [x] CLI/SHELL script
-- [ ] Example scripts
-- [ ] Advanced API calls
-- [ ] Get Supernote Cloud API complete
-- [ ] Docker container
+- [x] CLI / shell commands
+- [ ] Example scripts — common workflows (sync a folder, batch-export notes to PDF)
+- [ ] Advanced file operations — move, rename, copy, and recursive walk
+- [ ] Broader endpoint coverage as use cases come up
+- [ ] Docker image — likely only if a sync/daemon mode lands
 
-## Want to contribute?
+## Contributing
 
-PRs are welcome. But please open an issue first to see if the proposed feature fits with the direction of this library.
+PRs are welcome. For anything beyond a small fix, open an issue first so we can make sure it fits the direction of the library before you put in the work.
 
 ## Acknowledgements
 
